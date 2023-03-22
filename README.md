@@ -4,11 +4,15 @@
 
 This class was designed to interface with AWS S3 and allows users minimal setup.  Currently, there are five methods available.  They are NewS3Connection,ListBucketContents, GetS3Item, PutS3Item and DeleteS3Item.
 
+### NewS3Connection ###
+
 NewS3Connection is the start point for the class.  The method requires the Amazon.RegionEndpoint so the class knows what region to look into in AWS.
 
 ```
 AWSS3Wrapper s3 = AWSS3Wrapper.NewS3Connection(Amazon.RegionEndpoint.USWest2);
 ```
+
+### ListBucketContents ###
 
 ListBucketContents is simply to use and only requires the bucket name.  The method returns a Task<List<string>>.  
 
@@ -17,6 +21,8 @@ Note - This will also return any file paths as contents.
 ```
 List<string> contents = await s3.ListBucketContents(<My s3 bucket name>);
 ```
+
+### GetS3Items ###
 
 GetS3Items requires both the bucket name and key(or path if needed, see below in Special Notes).  The method returns a generic.  
 
