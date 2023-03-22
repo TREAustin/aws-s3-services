@@ -5,10 +5,19 @@ using System.Text.Json;
 public class AWSS3Wrapper
 
 {
+    private Amazon.RegionEndpoint endpoint;
+    
+    private AWSS3Wrapper(Amazon.RegionEndpoint endpoint){
+        this.endpoint = endpoint;
+    }
+
+    public static AWSS3Wrapper NewS3Connection(Amazon.RegionEndpoint endpoint){
+        return AWSS3Wrapper(endpoint);
+    }
     public async Task<List<string>> ListS3BucketContents(string bucketName)
     {
         List<string> data = new();
-        using (var client = new AmazonS3Client(Amazon.RegionEndpoint.USWest1))
+        using (var client = new AmazonS3Client(endpoint))
         {
             try
             {
@@ -41,7 +50,7 @@ public class AWSS3Wrapper
     public async Task<T> GetS3Item<T>(string bucketName, string key)
     {
         string contents = "";
-        using (var client = new AmazonS3Client(Amazon.RegionEndpoint.USWest1))
+        using (var client = new AmazonS3Client(endpoint))
         {
             try
             {
@@ -67,7 +76,7 @@ public class AWSS3Wrapper
 
     public async Task<bool> PutS3Item(string bucketName, string key, object contents)
     {
-        using (var client = new AmazonS3Client(Amazon.RegionEndpoint.USWest1))
+        using (var client = new AmazonS3Client(endpoint))
         {
             try
             {
@@ -89,7 +98,7 @@ public class AWSS3Wrapper
 
     public async Task<bool> DeleteS3Item(string bucketName, string key)
     {
-        using (var client = new AmazonS3Client(Amazon.RegionEndpoint.USWest1))
+        using (var client = new AmazonS3Client(endpoint))
         {
             try
             {
